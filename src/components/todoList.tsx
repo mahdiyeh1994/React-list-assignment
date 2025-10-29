@@ -22,7 +22,7 @@ const TodoList: React.FC<TodoListProps> = ({
           <thead>
             <tr className="bg-gray-100">
               <th className="px-4 py-2 border">Title</th>
-              <th className="px-4 py-2 border">subTitle</th>
+              <th className="px-4 py-2 border">Subtitle</th>
               <th className="px-4 py-2 border">Created Date</th>
                <th className="px-4 py-2 border">Actions</th>
             </tr>
