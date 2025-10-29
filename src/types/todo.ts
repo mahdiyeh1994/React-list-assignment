@@ -16,7 +16,11 @@ export interface TodoFormModalProps {
   open: boolean;
   onClose: () => void;
   onSave: (customer: Todo, index?: number) => void;
-  todos: Todo[];
   initialItem?: Todo;
   editingIndex?: number;
+}
+export interface DeleteModalProps {
+  open: boolean;
+  onClose: () => void;
+  onDelete: () => void;
 }

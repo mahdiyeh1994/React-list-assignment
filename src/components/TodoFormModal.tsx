@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Todo, TodoFormData, TodoFormModalProps } from "../types/todo";
+import Modal from "./Modal";
 
 const schema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -13,7 +14,6 @@ const TodoFormModal: React.FC<TodoFormModalProps> = ({
   open,
   onClose,
   onSave,
-  todos,
   initialItem,
   editingIndex,
 }) => {
@@ -44,14 +44,20 @@ const TodoFormModal: React.FC<TodoFormModalProps> = ({
 
   if (!open) return null;
 
-  const onSubmit = (data:TodoFormData ) => {
+  const onSubmit = (data: TodoFormData) => {
     const now = new Date();
-    const formattedDate = now.toLocaleDateString('en-US') + ' ' + 
-      now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    const formattedDate =
+      now.toLocaleDateString("en-US") +
+      " " +
+      now.toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+      });
     const trimmed: Todo = {
       title: data.title.trim(),
       subtitle: data.subtitle.trim(),
-      createdDate: formattedDate
+      createdDate: formattedDate,
     };
     onSave(trimmed, editingIndex);
     reset();
@@ -59,28 +65,12 @@ const TodoFormModal: React.FC<TodoFormModalProps> = ({
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      onClick={onClose}
+    <Modal 
+      open={open} 
+      onClose={onClose}
+      title={initialItem ? "Edit Todo" : "Create New Todo"}
     >
-      <div
-        className="relative bg-white rounded-lg shadow-lg max-w-4xl w-full p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          aria-label="Close modal"
-        >
-          ✕
-        </button>
-
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">
-          {initialItem ? "Edit Todo" : "Create New Todo"}
-        </h2>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 gap-4">
             {/* Title */}
             <div>
@@ -108,7 +98,7 @@ const TodoFormModal: React.FC<TodoFormModalProps> = ({
                 htmlFor="subtitle"
                 className="block text-sm font-medium text-gray-700"
               >
-               Subtitle
+                Subtitle
               </label>
               <input
                 id="subtitle"
@@ -121,7 +111,7 @@ const TodoFormModal: React.FC<TodoFormModalProps> = ({
                 </p>
               )}
             </div>
-            </div>
+          </div>
           <div className="mt-6 flex justify-end space-x-2">
             <button
               type="button"
@@ -141,8 +131,7 @@ const TodoFormModal: React.FC<TodoFormModalProps> = ({
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </Modal>
   );
 };
 

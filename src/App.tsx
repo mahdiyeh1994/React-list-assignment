@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Todo } from "./types/todo";
-import TodoList from "./components/todoList";
 import TodoFormModal from "./components/TodoFormModal";
+import TodoList from "./components/TodoList";
+import DeleteModal from "./components/DeleteModal";
 
 export default function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [editingIndex, setEditingIndex] = useState<number | undefined>(
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
     undefined
   );
-  
+
   // Load from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem("todos");
@@ -20,7 +22,7 @@ export default function App() {
 
   // Called when the “Add New” button is clicked
   const startCreate = () => {
-    setEditingIndex(undefined);
+    setSelectedIndex(undefined);
     setIsModalOpen(true);
   };
   // Saves updated list to state + localStorage
@@ -41,10 +43,20 @@ export default function App() {
       saveList([...todos, { ...data }]);
     }
   };
-    // Called when the “Edit” button is clicked in the list
+  // Called when the “Edit” button is clicked in the list
   const startEdit = (idx: number) => {
-    setEditingIndex(idx);
+    setSelectedIndex(idx);
     setIsModalOpen(true);
+  };
+   // Called when the “Delete” button is clicked in the list
+  const startDelete = (idx: number) => {
+    setSelectedIndex(idx);
+   setIsDeleteModalOpen(true)
+  };
+  // Called when DeleteModal confirm delete
+  const handleDelete = () => {
+    const updated = todos.filter((_, i) => i !== selectedIndex);
+    saveList(updated);
   };
   return (
     <div>
@@ -59,17 +71,25 @@ export default function App() {
       </header>
 
       <main className="p-4">
-        <TodoList todos={todos} onDelete={() => {}} onEdit={startEdit} />
+        <TodoList
+          todos={todos}
+          onDelete={startDelete}
+          onEdit={startEdit}
+        />
       </main>
       <TodoFormModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
-        todos={todos}
         initialItem={
-          editingIndex === undefined ? undefined : todos[editingIndex]
+          selectedIndex === undefined ? undefined : todos[selectedIndex]
         }
-        editingIndex={editingIndex}
+        editingIndex={selectedIndex}
+      />
+      <DeleteModal
+        open={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onDelete={handleDelete}
       />
     </div>
   );
