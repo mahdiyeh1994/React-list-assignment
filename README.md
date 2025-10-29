@@ -1,6 +1,6 @@
-# Customer Management System
+# Todo List System
 
-A simple customer management application built with **Vite**, **Tailwind CSS**, and **TypeScript**.
+A simple Todo List application built with **Vite**, **Tailwind CSS**, and **TypeScript**.
 
 ## Tech Stack
 
@@ -8,7 +8,6 @@ A simple customer management application built with **Vite**, **Tailwind CSS**, 
 - **Tailwind CSS**: Utility-first CSS framework for styling  
 - **TypeScript**: Static typing for React components  
 - **React**: Frontend UI library  
-- **Jest** & **React Testing Library**: For unit and integration tests  
 - **Yup** & **React Hook Form**: Form validation and handling
 
 ## Installation
@@ -24,10 +23,6 @@ npm run dev
 ```
 The app will be available at http://localhost:5173 (or whatever port Vite chooses).
 
-# Testing
-```bash
-npm test
-```
 # Project Structure
 ```
 ├─ public/
@@ -38,18 +33,14 @@ npm test
 │   ├─ App.tsx
 │   ├─ index.tsx
 │   └─ index.css
-├─ tests/
-│   └─ bdd/
 ├─ tailwind.config.js
 ├─ tsconfig.json
 ├─ vite.config.ts
 └─ README.md
 ```
-**src/components/:** React components (e.g., CustomerList, CustomerFormModal).
+**src/components/:** React components (e.g., TodoList, TodoFormModal, Modal).
 
-**src/types/:** TypeScript type definitions (e.g., Customer interface).
-
-**tests/:** BDD feature files.
+**src/types/:** TypeScript type definitions (e.g., Todo interface).
 
 **tailwind.config.js:** Tailwind CSS configuration.
 
@@ -57,11 +48,11 @@ npm test
 
 # Usage
 
-1.  Open the “Customer Management System” in your browser.
-2.  Click “New Customer” to open the modal form.
-3.  Fill in all required fields and click “Create Customer”.
-4.  The new customer will appear in the list immediately.
-5.  To edit, click “Update” on a row; modify fields and click “Save Changes”.
+1.  Open the “Todo List System” in your browser.
+2.  Click “Add New” to open the modal form.
+3.  Fill in all required fields and click “Create Todo”.
+4.  The new Todo will appear in the list immediately.
+5.  To edit, click “Edit” on a row; modify fields and click “Save Changes”.
 6.  To delete, click “Delete” on a row and confirm.
 
 
